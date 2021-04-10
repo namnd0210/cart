@@ -23,7 +23,7 @@ const Headers = () => {
             <img src={cart} alt="cart" onClick={() => toggleModal(true)} />
           </div>
 
-          <Link to="/users">
+          <Link to="/user">
             <div styleName="profile">
               <Avatar />
               <div styleName="user-name">Đức Nam</div>

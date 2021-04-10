@@ -1,15 +1,17 @@
 import React from "react";
-import Cart from "./Cart";
-import Products from "./Products";
+import LeftPanel from "../LeftPanel/index";
+import RightPanel from "./RightPanel";
+import CSSModules from "react-css-modules";
+import style from "./style.module.scss";
 
 const index = () => {
   return (
-    <div>
-      <Cart />
+    <div styleName="container">
+      <LeftPanel />
 
-      <Products />
+      <RightPanel />
     </div>
   );
 };
 
-export default index;
+export default CSSModules(index, style);
