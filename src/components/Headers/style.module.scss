@@ -1,0 +1,27 @@
+.wrapper {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .right-header {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .cart img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+      padding-left: 20px;
+    }
+  }
+}
