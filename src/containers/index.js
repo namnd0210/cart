@@ -1,3 +1,4 @@
+import CommonLayout from "components/CommonLayout";
 import Headers from "components/Headers";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -8,14 +9,16 @@ export default function index() {
     <Router>
       <Headers />
 
-      <Switch>
-        <Route path="/users">
-          <Users />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+      <CommonLayout>
+        <Switch>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </CommonLayout>
     </Router>
   );
 }
