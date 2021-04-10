@@ -8,18 +8,20 @@ import cart from "./cart.png";
 const Headers = () => {
   return (
     <div styleName="wrapper">
-      <Link to="/">Home</Link>
+      <div className="container" styleName="header">
+        <Link to="/">Home</Link>
 
-      <div styleName="right-header">
-        <div styleName="cart">
-          <img src={cart} alt="cart" />
-        </div>
-        <Link to="/users">
-          <div styleName="profile">
-            <Avatar />
-            <div styleName="user-name">Duc Nam</div>
+        <div styleName="right-header">
+          <div styleName="cart">
+            <img src={cart} alt="cart" />
           </div>
-        </Link>
+          <Link to="/users">
+            <div styleName="profile">
+              <Avatar />
+              <div styleName="user-name">Duc Nam</div>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

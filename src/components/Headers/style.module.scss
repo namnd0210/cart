@@ -1,8 +1,22 @@
 .wrapper {
+  background-color: #937d64;
+}
+
+.header {
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px;
+
+  a {
+    color: #fff;
+
+    &:hover {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
 
   .right-header {
     width: 200px;
