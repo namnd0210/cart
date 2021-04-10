@@ -11,7 +11,7 @@ export default function index() {
 
       <CommonLayout>
         <Switch>
-          <Route path="/users">
+          <Route path="/user">
             <Users />
           </Route>
           <Route path="/">
