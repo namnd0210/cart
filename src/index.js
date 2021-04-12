@@ -4,8 +4,8 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 // import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
-import reducer from "reducers";
-import { getAllProducts } from "actions";
+import reducer from "redux/reducers";
+import { getAllProducts } from "redux/actions";
 import Containers from "containers";
 
 import "bootstrap/dist/css/bootstrap.min.css";
