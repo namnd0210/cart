@@ -1,24 +1,32 @@
 import CommonLayout from "components/CommonLayout";
-import Headers from "components/Headers";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CheckoutProduct from "./CheckoutProduct";
 import Home from "./Home";
+import Login from "./Login";
 
 export default function index() {
   return (
     <Router>
-      <Headers />
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
 
-      <CommonLayout>
-        <Switch>
-          <Route path="/user">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </CommonLayout>
+        <CommonLayout>
+          <Switch>
+            <Route path="/user">
+              <Users />
+            </Route>
+            <Route path="/checkout">
+              <CheckoutProduct />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </CommonLayout>
+      </Switch>
     </Router>
   );
 }

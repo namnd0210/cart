@@ -4,9 +4,11 @@ import CSSModules from "react-css-modules";
 import styles from "./style.module.scss";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import { useSelector } from "react-redux";
 // import { auth } from "firebase";
 
 const Headers = () => {
+  const basket = useSelector(({ products: { basket } }) => basket);
   // const history = useHistory();
   // const login = () => {
   //   if (user) {
@@ -64,16 +66,12 @@ const Headers = () => {
       </div>
       <Link to="/checkout" styleName="header__link">
         <div styleName="header__optionBasket">
-          {/* shopping basket icon */}
           <ShoppingBasketIcon />
-          {/* number of items in the basket */}
-          {/* we use {basket?.length} to render the length of the basket when basket property of the state reaches the header component. without this, the dom will render the basket.length even when it has not reach the header component therby resulting to an error  */}
           <span styleName="header__optionLineTwo header__basketCount">
-            {/* {basket?.length} */}5
+            {basket.length}
           </span>
         </div>
       </Link>
-      {/* basket icon with number*/}
     </nav>
   );
 };

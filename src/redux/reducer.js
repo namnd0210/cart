@@ -6,7 +6,7 @@ import productReducer from "./product/product.reducer";
 const reducers = combineReducers({
   // auth: authReducer,
   // toast: toastReducer,
-  product: productReducer,
+  products: productReducer,
 });
 
 export default reducers;
