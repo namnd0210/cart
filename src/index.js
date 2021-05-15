@@ -1,27 +1,21 @@
 import React from "react";
 import { render } from "react-dom";
-import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-// import { createLogger } from "redux-logger";
-import thunk from "redux-thunk";
-import reducer from "reducers";
-import { getAllProducts } from "actions";
+import { getAllProducts } from "./redux/product/product.action";
 import Containers from "containers";
+import { PersistGate } from "redux-persist/integration/react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const middleware = [thunk];
-// if (process.env.NODE_ENV !== "production") {
-//   middleware.push(createLogger());
-// }
-
-const store = createStore(reducer, applyMiddleware(...middleware));
+import { store, persistor } from "redux/store";
 
 store.dispatch(getAllProducts());
 
 render(
   <Provider store={store}>
-    <Containers />
+    <PersistGate loading={null} persistor={persistor}>
+      <Containers />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,6 +1,6 @@
 import React from "react";
 import CSSModules from "react-css-modules";
-import style from "./style.module.scss";
+import style from "../styles/left-panel.module.scss";
 
 const LeftPanel = () => {
   return (

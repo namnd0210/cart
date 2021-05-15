@@ -1,17 +1,16 @@
 import React from "react";
-import LeftPanel from "../LeftPanel/index";
-import RightPanel from "./RightPanel";
-import CSSModules from "react-css-modules";
-import style from "./style.module.scss";
+import { useSelector } from "react-redux";
+import LeftPanel from "./Component/LeftPanel";
+import RightPanel from "./Component/RightPanel";
 
 const index = () => {
   return (
-    <div styleName="container">
-      <LeftPanel />
+    <div>
+      {/* <LeftPanel /> */}
 
       <RightPanel />
     </div>
   );
 };
 
-export default CSSModules(index, style);
+export default index;
