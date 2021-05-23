@@ -5,7 +5,6 @@ import DefaultImage from "constants/images/DefaultImage.png";
 import { useDispatch } from "react-redux";
 
 const Product = ({ product }) => {
-  console.log(product);
   const dispatch = useDispatch();
 
   const addToBasket = () => {

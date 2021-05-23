@@ -15,6 +15,7 @@ const Headers = () => {
   //     history.push("/login");
   //   }
   // };
+  const amount = basket.reduce((acc, item) => (acc += item.amount), 0);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,7 +50,7 @@ const Headers = () => {
           <Link to="/cart">
             <img id="cart-icon" src={cart} alt="cart" />
           </Link>
-          <p id="cart-total">{basket.length || 0}</p>
+          <p id="cart-total">{amount || 0}</p>
         </div>
       </div>
     </nav>

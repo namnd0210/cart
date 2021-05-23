@@ -1,7 +1,34 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import up from "./arrow-up.png";
+import down from "./arrow-down.png";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const basket = useSelector(({ products: { basket } }) => basket);
+
+  const amount = basket.reduce((acc, item) => (acc += item.amount), 0);
+
+  const total = basket.reduce(
+    (acc, item) => (acc += item.amount * item.price),
+    0
+  );
+
+  const increaseProduct = (product) => {
+    dispatch({
+      type: "PRODUCT_INCREMENT",
+      product,
+    });
+  };
+
+  const decreaseProduct = (product) => {
+    dispatch({
+      type: "PRODUCT_DECREMENT",
+      product,
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-lg-12">
@@ -14,16 +41,14 @@ const Cart = () => {
           <br />
           <table className="table">
             <tr>
-              {/* <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th> */}
               <th>
                 <h5>
-                  Items: <strong>get_cart_items</strong>
+                  Items: <strong>{amount}</strong>
                 </h5>
               </th>
-              {/* <th><h5>Total:<strong> ${{order.get_cart_total|floatformat:2}}</strong></h5></th> */}
               <th>
                 <h5>
-                  Total:<strong> $200</strong>
+                  Total:<strong> ${total}</strong>
                 </h5>
               </th>
               <th>
@@ -53,31 +78,42 @@ const Cart = () => {
             </div>
           </div>
           {/* {% for item in items %} */}
-          <div className="cart-row">
-            {/* <div style={{flex:"2"}}><img className="row-image" src="{{item.product.imageURL}}"></div> */}
-            {/* <div style={{flex:"2"}}><p>{{item.product.name}}</p></div> */}
-            <div style={{ flex: "2" }}>
-              <p>item.product.name</p>
-            </div>
-            {/* <div style={{flex:"1"}}><p>${{item.product.price|floatformat:2}}</p></div> */}
-            <div style={{ flex: "1" }}>
-              <p>$item.product.price|floatformat:2</p>
-            </div>
-            <div style={{ flex: "1" }}>
-              {/* <p className="quantity">{{item.quantity}}</p> */}
-              <p className="quantity">item.quantity</p>
-              <div className="quantity">
-                {/* <img data-product="{{item.product.id}}" data-action="add" className="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
-              
-                      <img data-product="{{item.product.id}}" data-action="remove" className="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}"> */}
+          {basket.map((item) => {
+            return (
+              <div className="cart-row align-items-center">
+                <div style={{ flex: "2" }}>
+                  <img className="row-image" src={item.images[0]} />
+                </div>
+                <div style={{ flex: "2" }}>
+                  <p>{item.name || "empty name"}</p>
+                </div>
+                <div style={{ flex: "1" }}>
+                  <p>${item.price || 0}</p>
+                </div>
+                <div style={{ flex: "1" }}>
+                  <p className="quantity">{item.amount}</p>
+                  <div className="quantity">
+                    <img
+                      data-action="add"
+                      className="chg-quantity update-cart"
+                      src={up}
+                      onClick={() => increaseProduct(item)}
+                    />
+
+                    <img
+                      data-action="remove"
+                      className="chg-quantity update-cart"
+                      src={down}
+                      onClick={() => decreaseProduct(item)}
+                    />
+                  </div>
+                </div>
+                <div style={{ flex: "1" }}>
+                  <p>${item.amount * item.price}</p>
+                </div>
               </div>
-            </div>
-            {/* <div style={{flex:"1"}}><p>${{item.get_total|floatformat:2}}</p></div> */}
-            <div style={{ flex: "1" }}>
-              <p>$item.get_total|floatformat:2</p>
-            </div>
-          </div>
-          {/* {% endfor %} */}
+            );
+          })}
         </div>
       </div>
     </div>
