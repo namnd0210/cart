@@ -1,4 +1,3 @@
-import { Redirect } from "react-router";
 import { all, call, put, takeEvery } from "redux-saga/effects";
 
 import { getAllProductsResult, vnpayPaymentResult } from "./product.action";

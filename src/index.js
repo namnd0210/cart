@@ -5,6 +5,7 @@ import { getAllProducts } from "./redux/product/product.action";
 import Containers from "containers";
 import { PersistGate } from "redux-persist/integration/react";
 
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { store, persistor } from "redux/store";

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CheckoutProduct from "./CheckoutProduct";
 import Home from "./Home";
 import Login from "./Login";
+import Cart from "./Cart";
 
 export default function index() {
   return (
@@ -20,6 +21,9 @@ export default function index() {
             </Route>
             <Route path="/checkout">
               <CheckoutProduct />
+            </Route>
+            <Route path="/cart">
+              <Cart />
             </Route>
             <Route path="/">
               <Home />

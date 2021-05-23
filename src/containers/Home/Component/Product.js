@@ -5,6 +5,7 @@ import DefaultImage from "constants/images/DefaultImage.png";
 import { useDispatch } from "react-redux";
 
 const Product = ({ product }) => {
+  console.log(product);
   const dispatch = useDispatch();
 
   const addToBasket = () => {
@@ -15,6 +16,38 @@ const Product = ({ product }) => {
   };
 
   return (
+    <div className="col-lg-3">
+      <div styleName="image-wrapper">
+        <div className="box-element product">
+          <img
+            src={product.images[0] || DefaultImage}
+            alt={product.description}
+          />
+          <h6>
+            <strong>{product.name}</strong>
+          </h6>
+          <hr />
+          <button
+            onClick={addToBasket}
+            data-product={product.id}
+            data-action="add"
+            className="btn btn-outline-secondary add-btn update-cart"
+          >
+            Add to Cart
+          </button>{" "}
+          <button className="btn btn-outline-success" href="#">
+            View
+          </button>
+          <h4 style={{ display: "inline-block", float: "right" }}>
+            <strong>${product.price}</strong>
+          </h4>
+        </div>
+      </div>
+    </div>
+  );
+
+  {
+    /* return (
     <div styleName="product">
       <div styleName="product__info">
         <p>{product.description}</p>
@@ -23,11 +56,7 @@ const Product = ({ product }) => {
           <strong>{product.price}</strong>
         </p>
         <div styleName="product__rating">
-          {/* {Array(rating)
-            .fill()
-            .map((index) => (
-              <i key={index} class="fa fa-star"></i>
-            ))} */}
+      
         </div>
       </div>
       <div styleName="img-wrapper">
@@ -38,7 +67,8 @@ const Product = ({ product }) => {
       </div>
       <button onClick={addToBasket}>Add to basket</button>
     </div>
-  );
+  ); */
+  }
 };
 
 export default CSSModules(Product, style);

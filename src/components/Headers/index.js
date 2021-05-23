@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import CSSModules from "react-css-modules";
 import styles from "./style.module.scss";
-import SearchIcon from "@material-ui/icons/Search";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { useSelector } from "react-redux";
+import cart from "./cart.png";
 // import { auth } from "firebase";
+import { Link } from "react-router-dom";
 
 const Headers = () => {
   const basket = useSelector(({ products: { basket } }) => basket);
@@ -17,61 +16,42 @@ const Headers = () => {
   //   }
   // };
 
-  const [openModal, toggleModal] = useState(false);
-
   return (
-    <nav styleName="header">
-      {openModal && (
-        <CartModal openModal={openModal} onClose={() => toggleModal(false)} />
-      )}
-      {/* logo on the left -> img */}
-      <Link to="/">
-        <img
-          styleName="header__logo"
-          src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-          alt="amazon logo"
-        />
-      </Link>
-      {/* search box */}
-      <div styleName="header__search">
-        <input type="text" styleName="header__searchInput" />
-        <SearchIcon styleName="header__searchIcon" />
-      </div>
-      {/* 3 links */}
-      <div styleName="header__nav">
-        {/* <Link to={!user && "/login"} styleName="header__link">
-            <div onClick={login} styleName="header__option">
-              <span styleName="header__optionLineOne">Hello {user?.email}</span>
-              <span styleName="header__optionLineTwo">
-                {user ? "Sign Out" : "Sign In"}
-              </span>
-            </div>
-          </Link> */}
-      </div>
-      <div styleName="header__nav">
-        <Link to="/order" styleName="header__link">
-          <div styleName="header__option">
-            <span styleName="header__optionLineOne">Returns</span>
-            <span styleName="header__optionLineTwo">& Orders</span>
-          </div>
-        </Link>
-      </div>
-      <div styleName="header__nav">
-        <Link to="/login" styleName="header__link">
-          <div styleName="header__option">
-            <span styleName="header__optionLineOne">Your</span>
-            <span styleName="header__optionLineTwo">Prime</span>
-          </div>
-        </Link>
-      </div>
-      <Link to="/checkout" styleName="header__link">
-        <div styleName="header__optionBasket">
-          <ShoppingBasketIcon />
-          <span styleName="header__optionLineTwo header__basketCount">
-            {basket.length}
-          </span>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a className="navbar-brand" href="/">
+        Ecom
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+            <a className="nav-link" href="/">
+              Store <span className="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+        <div className="form-inline my-2 my-lg-0">
+          <a href="#" className="btn btn-warning">
+            Login
+          </a>
+
+          <Link to="/cart">
+            <img id="cart-icon" src={cart} alt="cart" />
+          </Link>
+          <p id="cart-total">{basket.length || 0}</p>
         </div>
-      </Link>
+      </div>
     </nav>
   );
 };

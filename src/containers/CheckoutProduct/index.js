@@ -2,43 +2,140 @@ import React from "react";
 import CheckoutProduct from "./CheckoutProduct";
 import Subtotal from "./SubTotal.js";
 import CSSModules from "react-css-modules";
-import style from "./style.module.scss";
+import styles from "./style.module.scss";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Checkout = () => {
   const basket = useSelector(({ products: { basket } }) => basket);
   return (
-    <div styleName="checkout">
-      <div styleName="">
-        <img
-          styleName="checkout__ad"
-          src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_45M_v2_1x._CB432458380_.jpg"
-          alt="ad"
-        />
-        {basket?.length === 0 ? (
-          <div>
-            <h2>Your shopping basket is empty</h2>
-            <p>
-              You have no items in your basket. To buy one or add item to basket
-              click the add to basket button
-            </p>
-          </div>
-        ) : (
-          <div>
-            <h2 styleName="checkout__title">Your shopping basket</h2>
-            {basket.length > 0 &&
-              basket.map((product) => {
-                return <CheckoutProduct product={product} />;
-              })}
-          </div>
-        )}
-      </div>
-      {basket?.length > 0 && (
-        <div styleName="">
-          <Subtotal />
+    <div className="row">
+      <div className="col-lg-6">
+        <div className="box-element" id="form-wrapper">
+          <form id="form">
+            <div id="user-info">
+              <div className="form-field">
+                <input
+                  required
+                  className="form-control"
+                  type="text"
+                  name="name"
+                  placeholder="Name.."
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  required
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  placeholder="Email.."
+                />
+              </div>
+            </div>
+
+            <div id="shipping-info">
+              <hr />
+              <p>Shipping Information:</p>
+              <hr />
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="address"
+                  placeholder="Address.."
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="city"
+                  placeholder="City.."
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="state"
+                  placeholder="State.."
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="zipcode"
+                  placeholder="Zip code.."
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="country"
+                  placeholder="Zip code.."
+                />
+              </div>
+            </div>
+
+            <hr />
+            <input
+              id="form-button"
+              className="btn btn-success btn-block"
+              type="submit"
+              value="Continue"
+            />
+          </form>
         </div>
-      )}
+
+        <br />
+        <div className="box-element hidden" id="payment-info">
+          <small>Paypal Options</small>
+          <button id="make-payment">Make payment</button>
+          <div id="paypal-button-container"></div>
+        </div>
+      </div>
+
+      <div className="col-lg-6">
+        <div className="box-element">
+          <Link className="btn btn-outline-dark" to="/cart">
+            &#x2190; Back to Cart
+          </Link>
+          <hr />
+          <h3>Order Summary</h3>
+          <hr />
+          {/* {% for item in items %}
+				<div className="cart-row">
+					<div style={{flex:"2"}}><img className="row-image" src="{{item.product.imageURL}}"></div>
+					<div style={{flex:"2"}}><p>{{item.product.name}}</p></div>
+					<div style={{flex:"1"}}><p>${{item.product.price|floatformat:2}}</p></div>
+					<div style={{flex:"1"}}><p>x{{item.quantity}}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Items:   {{order.get_cart_items}}</h5>
+				<h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5> */}
+
+          <div className="cart-row">
+            <div style={{ flex: "2" }}>
+              <img className="row-image" src="/" />
+            </div>
+            <div style={{ flex: "2" }}>
+              <p>item.product.name</p>
+            </div>
+            <div style={{ flex: "1" }}>
+              <p>$item.product.price|floatformat:2</p>
+            </div>
+            <div style={{ flex: "1" }}>
+              <p>xitem.quantity</p>
+            </div>
+          </div>
+          <h5>Items: order.get_cart_items</h5>
+          <h5>Total: $order.get_cart_total|floatformat:2</h5>
+        </div>
+      </div>
     </div>
   );
 };
-export default CSSModules(Checkout, style);
+export default CSSModules(Checkout, styles);
