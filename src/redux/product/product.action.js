@@ -11,3 +11,12 @@ export const getAllProductsResult = (result, isSuccess = true) => ({
     : types.GET_ALL_PRODUCT_FAILED,
   result: result,
 });
+
+export const vnpayPayment = () => ({
+  type: types.VNPAY_PAYMENT,
+});
+
+export const vnpayPaymentResult = (result, isSuccess = true) => ({
+  type: isSuccess ? types.VNPAY_PAYMENT_SUCCESS : types.VNPAY_PAYMENT_FAILED,
+  result: result,
+});

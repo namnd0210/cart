@@ -2,14 +2,21 @@ import React from "react";
 import CurrencyFormat from "react-currency-format";
 import CSSModules from "react-css-modules";
 import style from "./style.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { vnpayPayment } from "redux/product/product.action";
+import { Button } from "reactstrap";
 
 export const getBasketTotal = (basket) => {
   basket?.reduce((amount, item) => item.price + amount, 0);
 };
 
 const Subtotal = () => {
+  const dispatch = useDispatch();
   const basket = useSelector(({ products: { basket } }) => basket);
+
+  const handleCheckoutVnPay = () => {
+    dispatch(vnpayPayment());
+  };
 
   return (
     <div styleName="subtotal">
@@ -33,7 +40,9 @@ const Subtotal = () => {
         prefix={"$"}
       />
 
-      <button>Proceed to checkout</button>
+      <Button color="warning" onClick={handleCheckoutVnPay}>
+        Checkout by Vnpay
+      </Button>
     </div>
   );
 };

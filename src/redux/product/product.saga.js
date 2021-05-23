@@ -1,7 +1,8 @@
+import { Redirect } from "react-router";
 import { all, call, put, takeEvery } from "redux-saga/effects";
 
-import { getAllProductsResult } from "./product.action";
-import { getAllProductsApi } from "./product.api";
+import { getAllProductsResult, vnpayPaymentResult } from "./product.action";
+import { getAllProductsApi, vnpayPaymentApi } from "./product.api";
 import types from "./product.type";
 
 function* getAllProductsSaga() {
@@ -16,6 +17,25 @@ function* getAllProductsSaga() {
   }
 }
 
+function* vnpayPaymentSaga() {
+  try {
+    const res = yield call(vnpayPaymentApi, { data: "1" });
+
+    const { redirect_url } = res.data;
+    console.log(redirect_url);
+
+    yield put(vnpayPaymentResult(res));
+    window.open(redirect_url, "_blank");
+  } catch (error) {
+    console.log(error);
+    const isSuccess = false;
+    yield put(vnpayPaymentResult(error, isSuccess));
+  }
+}
+
 export default function* rootSaga() {
-  yield all([takeEvery(types.GET_ALL_PRODUCT, getAllProductsSaga)]);
+  yield all([
+    takeEvery(types.GET_ALL_PRODUCT, getAllProductsSaga),
+    takeEvery(types.VNPAY_PAYMENT, vnpayPaymentSaga),
+  ]);
 }
