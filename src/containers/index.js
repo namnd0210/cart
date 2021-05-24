@@ -1,10 +1,12 @@
 import CommonLayout from "components/CommonLayout";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import CheckoutProduct from "./CheckoutProduct";
 import Home from "./Home";
 import Login from "./Login";
 import Cart from "./Cart";
+import Admin from "admin";
 
 export default function index() {
   return (
@@ -12,6 +14,9 @@ export default function index() {
       <Switch>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/admin">
+          <Admin />
         </Route>
 
         <CommonLayout>
