@@ -32,7 +32,7 @@ const Product = ({ product }) => {
             data-action="add"
             className="btn btn-outline-secondary add-btn update-cart"
           >
-            Add to Cart
+            Add
           </button>{" "}
           <button className="btn btn-outline-success" href="#">
             View

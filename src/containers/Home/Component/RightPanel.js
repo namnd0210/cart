@@ -8,7 +8,7 @@ const bannerImg =
   "https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg";
 
 const RightPanel = () => {
-  const products = useSelector(({ products: { data } }) => data);
+  const { data: products } = useSelector(({ products: { data } }) => data);
   return (
     <div styleName="home">
       <img styleName="home__image" src={bannerImg} alt="" />

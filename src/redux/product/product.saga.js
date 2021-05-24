@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
-
+import toast from "react-hot-toast";
 import { getAllProductsResult, vnpayPaymentResult } from "./product.action";
-import { getAllProductsApi, vnpayPaymentApi } from "./product.api";
+import { getAllProductsApi, vnpayPaymentApi, checkoutApi } from "./product.api";
 import types from "./product.type";
 
 function* getAllProductsSaga() {
@@ -32,9 +32,23 @@ function* vnpayPaymentSaga() {
   }
 }
 
+function* checkoutSaga(data) {
+  try {
+    const res = yield call(checkoutApi, data);
+    const { status } = res;
+    if (status === 200) {
+      toast.success("Successfully created!");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("This is an error!");
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(types.GET_ALL_PRODUCT, getAllProductsSaga),
     takeEvery(types.VNPAY_PAYMENT, vnpayPaymentSaga),
+    takeEvery(types.CHECKOUT, checkoutSaga),
   ]);
 }

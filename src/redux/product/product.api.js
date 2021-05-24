@@ -1,9 +1,15 @@
 import Axios from "axios";
 
 const PRODUCT_ENDPOINT = "http://localhost:8085/api/items";
+const CHECKOUT_ENDPOINT = "http://localhost:8085/api/orders";
 
 export const getAllProductsApi = async () => {
   return await Axios.get(`${PRODUCT_ENDPOINT}`);
+};
+
+export const checkoutApi = async ({ data }) => {
+  console.log(data);
+  return await Axios.post(CHECKOUT_ENDPOINT, data);
 };
 
 export const vnpayPaymentApi = async ({ data }) => {

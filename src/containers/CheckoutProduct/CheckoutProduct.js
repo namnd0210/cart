@@ -22,13 +22,7 @@ const CheckoutProduct = ({ product }) => {
           <small>$</small>
           <strong>{product.price}</strong>
         </p>
-        {/* <div styleName="checkoutProduct__rating">
-          {Array(rating)
-            .fill()
-            .map((index) => (
-              <p key={index}>star</p>
-            ))}
-        </div> */}
+
         <button onClick={removeFromBasket}>Remove from basket</button>
       </div>
     </div>

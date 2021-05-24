@@ -67,3 +67,11 @@
   border-color: #a88734 #9c7e31 #846a29;
   color: #111;
 }
+
+.cart-row {
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+}

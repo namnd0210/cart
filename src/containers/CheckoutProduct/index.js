@@ -1,19 +1,66 @@
-import React from "react";
-import CheckoutProduct from "./CheckoutProduct";
-import Subtotal from "./SubTotal.js";
+import React, { useState } from "react";
 import CSSModules from "react-css-modules";
 import styles from "./style.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Label, Input } from "reactstrap";
+import { checkout } from "redux/product/product.action";
 
 const Checkout = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [shipType, setShipType] = useState("Express");
+  const [shipCompany, setShipCompany] = useState("Viettel Post");
+  const [method, setMethod] = useState("Cash");
+
   const basket = useSelector(({ products: { basket } }) => basket);
+  const amount = basket.reduce((acc, item) => (acc += item.amount), 0);
+  const total = basket.reduce(
+    (acc, item) => (acc += item.amount * item.price),
+    0
+  );
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const values = {
+      user: {
+        id: 1,
+      },
+      cart: {
+        items: basket.map((item) => ({
+          item: { id: item.id },
+          amount: item.amount,
+        })),
+      },
+      payment: {
+        method,
+        total: amount,
+        shipment: {
+          shipType,
+          shipCompany,
+          shipAddress: address,
+        },
+      },
+    };
+
+    dispatch(checkout(values));
+
+    console.log(values);
+  };
+
   return (
     <div className="row">
       <div className="col-lg-6">
         <div className="box-element" id="form-wrapper">
-          <form id="form">
+          <form id="form" onSubmit={handleSubmit}>
             <div id="user-info">
+              <hr />
+              <p>Personal information:</p>
+              <hr />
+
               <div className="form-field">
                 <input
                   required
@@ -21,6 +68,7 @@ const Checkout = () => {
                   type="text"
                   name="name"
                   placeholder="Name.."
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="form-field">
@@ -30,6 +78,16 @@ const Checkout = () => {
                   type="email"
                   name="email"
                   placeholder="Email.."
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="address"
+                  placeholder="Address.."
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
             </div>
@@ -38,45 +96,50 @@ const Checkout = () => {
               <hr />
               <p>Shipping Information:</p>
               <hr />
+
               <div className="form-field">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="address"
-                  placeholder="Address.."
-                />
+                <Label for="shipType">Ship type</Label>
+                <Input
+                  type="select"
+                  name="shipType"
+                  id="shipType"
+                  onChange={(e) => setShipType(e.target.value)}
+                >
+                  <option value="Express" selected>
+                    Express
+                  </option>
+                  <option value="Standard">Standard</option>
+                </Input>
+              </div>
+
+              <div className="form-field">
+                <Label for="shipCompany">Ship company</Label>
+                <Input
+                  type="select"
+                  name="shipCompany"
+                  id="shipCompany"
+                  onChange={(e) => setShipCompany(e.target.value)}
+                >
+                  <option value="Viettel Post" selected>
+                    Viettel Post
+                  </option>
+                  <option value="GHN">GHN</option>
+                  <option value="J&T Express">J&T Express</option>
+                </Input>
               </div>
               <div className="form-field">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="city"
-                  placeholder="City.."
-                />
-              </div>
-              <div className="form-field">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="state"
-                  placeholder="State.."
-                />
-              </div>
-              <div className="form-field">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="zipcode"
-                  placeholder="Zip code.."
-                />
-              </div>
-              <div className="form-field">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="country"
-                  placeholder="Zip code.."
-                />
+                <Label for="method">Method</Label>
+                <Input
+                  type="select"
+                  name="method"
+                  id="method"
+                  onChange={(e) => setMethod(e.target.value)}
+                >
+                  <option value="Cash" selected>
+                    Cash
+                  </option>
+                  <option value="Credit">Credit</option>
+                </Input>
               </div>
             </div>
 
@@ -106,33 +169,27 @@ const Checkout = () => {
           <hr />
           <h3>Order Summary</h3>
           <hr />
-          {/* {% for item in items %}
-				<div className="cart-row">
-					<div style={{flex:"2"}}><img className="row-image" src="{{item.product.imageURL}}"></div>
-					<div style={{flex:"2"}}><p>{{item.product.name}}</p></div>
-					<div style={{flex:"1"}}><p>${{item.product.price|floatformat:2}}</p></div>
-					<div style={{flex:"1"}}><p>x{{item.quantity}}</p></div>
-				</div>
-				{% endfor %}
-				<h5>Items:   {{order.get_cart_items}}</h5>
-				<h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5> */}
 
-          <div className="cart-row">
-            <div style={{ flex: "2" }}>
-              <img className="row-image" src="/" />
-            </div>
-            <div style={{ flex: "2" }}>
-              <p>item.product.name</p>
-            </div>
-            <div style={{ flex: "1" }}>
-              <p>$item.product.price|floatformat:2</p>
-            </div>
-            <div style={{ flex: "1" }}>
-              <p>xitem.quantity</p>
-            </div>
-          </div>
-          <h5>Items: order.get_cart_items</h5>
-          <h5>Total: $order.get_cart_total|floatformat:2</h5>
+          {basket.length > 0 &&
+            basket.map((item) => (
+              <div className="cart-row" styleName="cart-row">
+                <div style={{ flex: "2" }}>
+                  <img className="row-image" src={item.images[0]} />
+                </div>
+                <div style={{ flex: "2" }}>
+                  <p>{item.name}</p>
+                </div>
+                <div style={{ flex: "1" }}>
+                  <p>${item.price}</p>
+                </div>
+                <div style={{ flex: "1" }}>
+                  <p>x{item.amount}</p>
+                </div>
+              </div>
+            ))}
+
+          <h5>Items: {amount}</h5>
+          <h5>Total: ${total}</h5>
         </div>
       </div>
     </div>
