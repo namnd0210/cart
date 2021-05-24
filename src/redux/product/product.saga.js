@@ -1,7 +1,18 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import toast from "react-hot-toast";
-import { getAllProductsResult, vnpayPaymentResult } from "./product.action";
-import { getAllProductsApi, vnpayPaymentApi, checkoutApi } from "./product.api";
+import {
+  getAllProductsResult,
+  vnpayPaymentResult,
+  getProductResult,
+  deleteProductResult,
+} from "./product.action";
+import {
+  getAllProductsApi,
+  vnpayPaymentApi,
+  checkoutApi,
+  getProductApi,
+  deleteProductApi,
+} from "./product.api";
 import types from "./product.type";
 
 function* getAllProductsSaga() {
@@ -13,6 +24,35 @@ function* getAllProductsSaga() {
     console.log(error);
     const isSuccess = false;
     yield put(getAllProductsResult(error, isSuccess));
+  }
+}
+
+function* getProductSaga({ id }) {
+  try {
+    const res = yield call(getProductApi, id);
+
+    yield put(getProductResult(res));
+  } catch (error) {
+    console.log(error);
+    const isSuccess = false;
+    yield put(getProductResult(error, isSuccess));
+  }
+}
+
+function* deleteProductSaga({ id }) {
+  try {
+    const res = yield call(deleteProductApi, id);
+
+    const { status } = res;
+    if (status === 200) {
+      toast.success("Successfully created!");
+      yield put(deleteProductResult(id));
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("This is an error!");
+    const isSuccess = false;
+    yield put(deleteProductResult(error, isSuccess));
   }
 }
 
@@ -50,5 +90,7 @@ export default function* rootSaga() {
     takeEvery(types.GET_ALL_PRODUCT, getAllProductsSaga),
     takeEvery(types.VNPAY_PAYMENT, vnpayPaymentSaga),
     takeEvery(types.CHECKOUT, checkoutSaga),
+    takeEvery(types.GET_PRODUCT, getProductSaga),
+    takeEvery(types.DELETE_PRODUCT, deleteProductSaga),
   ]);
 }

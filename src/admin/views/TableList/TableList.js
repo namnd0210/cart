@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // @material-ui/core admin/components
 import { makeStyles } from "@material-ui/core/styles";
 // core admin/components
@@ -8,6 +8,10 @@ import Table from "admin/components/Table/Table.js";
 import Card from "admin/components/Card/Card.js";
 import CardHeader from "admin/components/Card/CardHeader.js";
 import CardBody from "admin/components/Card/CardBody.js";
+import Button from "admin/components/CustomButtons/Button.js";
+import Modal from "admin/components/Modal/Modal.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "redux/product/product.action";
 
 const styles = {
   cardCategoryWhite: {
@@ -37,38 +41,82 @@ const styles = {
       lineHeight: "1",
     },
   },
+  imageView: {
+    width: "100px",
+    height: "100px",
+    objectFit: "contain",
+  },
 };
 
 const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
+  const [currentProduct, setCurrentProduct] = React.useState(false);
+
+  const { data: products } = useSelector(({ products: { data } }) => data);
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
+
   return (
     <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
+      {open && (
+        <Modal currentProduct={currentProduct} toggle={() => setOpen(false)} />
+      )}
+
+      {products?.length > 0 && (
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader
+              color="primary"
+              className="d-flex justify-content-between"
+            >
+              <div>
+                <h4 className={classes.cardTitleWhite}>Products</h4>
+                <p className={classes.cardCategoryWhite}>
+                  Here is table of Products
+                </p>
+              </div>
+              <Button onClick={() => setOpen(true)} color="white">
+                Add
+              </Button>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHeaderColor="primary"
+                tableHead={[
+                  "",
+                  "Product Name",
+                  "Author",
+                  "Price",
+                  "Amount",
+                  "",
+                ]}
+                tableData={products.map((item) => [
+                  <img className={classes.imageView} src={item.images[0]} />,
+                  item.name,
+                  item.authors[0],
+                  `$${item.price}`,
+                  item.inStock,
+                  <Button
+                    onClick={() => {
+                      setCurrentProduct(products.find((e) => e.id === item.id));
+                      setOpen(true);
+                    }}
+                  >
+                    Detail
+                  </Button>,
+                ])}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      )}
+
       <GridItem xs={12} sm={12} md={12}>
         <Card plain>
           <CardHeader plain color="primary">

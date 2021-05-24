@@ -7,8 +7,15 @@ export const getAllProductsApi = async () => {
   return await Axios.get(`${PRODUCT_ENDPOINT}`);
 };
 
+export const getProductApi = async (id) => {
+  return await Axios.get(`${PRODUCT_ENDPOINT}/${id}`);
+};
+
+export const deleteProductApi = async (id) => {
+  return await Axios.delete(`${PRODUCT_ENDPOINT}/${id}`);
+};
+
 export const checkoutApi = async ({ data }) => {
-  console.log(data);
   return await Axios.post(CHECKOUT_ENDPOINT, data);
 };
 

@@ -1,6 +1,7 @@
 import CommonLayout from "components/CommonLayout";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import CheckoutProduct from "./CheckoutProduct";
 import Home from "./Home";
@@ -11,6 +12,7 @@ import Admin from "admin";
 export default function index() {
   return (
     <Router>
+      <Toaster />
       <Switch>
         <Route path="/login">
           <Login />

@@ -3,12 +3,24 @@ import types from "./product.type";
 const initState = {
   data: {},
   basket: [],
+  currentProduct: {},
 };
 
 export default function productReducer(state = initState, action) {
   switch (action.type) {
     case types.GET_ALL_PRODUCT_SUCCESS: {
       return { ...state, data: action.result.data };
+    }
+
+    case types.GET_PRODUCT_SUCCESS: {
+      return { ...state, currentProduct: action.result.data };
+    }
+
+    case types.DELETE_PRODUCT_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.data.filter((item) => item.id !== action.id),
+      };
     }
 
     case types.GET_ALL_PRODUCT_FAILED: {
