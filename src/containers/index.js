@@ -8,6 +8,14 @@ import Home from "./Home";
 import Login from "./Login";
 import Cart from "./Cart";
 import Admin from "admin";
+import setAuthToken from "helpers/setAuthToken";
+import PrivateRoute from "./PrivateRoute";
+
+if (localStorage.getItem("token")) {
+  setAuthToken(localStorage.getItem("token"));
+} else {
+  setAuthToken(null);
+}
 
 export default function index() {
   return (
@@ -17,12 +25,15 @@ export default function index() {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/admin">
-          <Admin />
-        </Route>
 
-        <CommonLayout>
-          <Switch>
+        <Route>
+          <PrivateRoute>
+            <Route path="/admin">
+              <Admin />
+            </Route>
+          </PrivateRoute>
+
+          <CommonLayout>
             <Route path="/user">
               <Users />
             </Route>
@@ -35,8 +46,8 @@ export default function index() {
             <Route path="/">
               <Home />
             </Route>
-          </Switch>
-        </CommonLayout>
+          </CommonLayout>
+        </Route>
       </Switch>
     </Router>
   );

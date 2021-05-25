@@ -12,6 +12,7 @@ import {
   checkoutApi,
   getProductApi,
   deleteProductApi,
+  updateProductApi,
 } from "./product.api";
 import types from "./product.type";
 
@@ -56,6 +57,20 @@ function* deleteProductSaga({ id }) {
   }
 }
 
+function* updateProductSaga(data) {
+  try {
+    const res = yield call(updateProductApi, data);
+
+    const { status } = res;
+    if (status === 200) {
+      toast.success("Successfully created!");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("This is an error!");
+  }
+}
+
 function* vnpayPaymentSaga() {
   try {
     const res = yield call(vnpayPaymentApi, { data: "1" });
@@ -92,5 +107,6 @@ export default function* rootSaga() {
     takeEvery(types.CHECKOUT, checkoutSaga),
     takeEvery(types.GET_PRODUCT, getProductSaga),
     takeEvery(types.DELETE_PRODUCT, deleteProductSaga),
+    takeEvery(types.UPDATE_PRODUCT, updateProductSaga),
   ]);
 }

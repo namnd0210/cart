@@ -13,7 +13,7 @@ export default function productReducer(state = initState, action) {
     }
 
     case types.GET_PRODUCT_SUCCESS: {
-      return { ...state, currentProduct: action.result.data };
+      return { ...state, currentProduct: action.result.data.data };
     }
 
     case types.DELETE_PRODUCT_SUCCESS: {

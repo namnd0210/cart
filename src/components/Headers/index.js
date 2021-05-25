@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import CSSModules from "react-css-modules";
 import styles from "./style.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cart from "./cart.png";
-// import { auth } from "firebase";
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 import { Link } from "react-router-dom";
+import setAuthToken from "helpers/setAuthToken";
+import { logOut } from "redux/auth/auth.action";
 
 const Headers = () => {
+  const [dropdownOpen, setOpen] = useState(false);
+  const toggle = () => setOpen(!dropdownOpen);
+  const dispatch = useDispatch();
+
+  const user = useSelector(({ auth: { user } }) => user);
   const basket = useSelector(({ products: { basket } }) => basket);
-  // const history = useHistory();
-  // const login = () => {
-  //   if (user) {
-  //     auth().signOut();
-  //     history.push("/login");
-  //   }
-  // };
   const amount = basket.reduce((acc, item) => (acc += item.amount), 0);
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem("token");
+    dispatch(logOut());
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,14 +54,26 @@ const Headers = () => {
           </li>
         </ul>
         <div className="form-inline my-2 my-lg-0">
-          <a href="#" className="btn btn-warning">
-            Login
-          </a>
-
           <Link to="/cart">
             <img id="cart-icon" src={cart} alt="cart" />
           </Link>
           <p id="cart-total">{amount || 0}</p>
+
+          {JSON.stringify(user) === JSON.stringify({}) && (
+            <Link to="/login" className="btn btn-warning">
+              Login
+            </Link>
+          )}
+
+          {JSON.stringify(user) !== JSON.stringify({}) && (
+            <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+              <DropdownToggle caret>{user.email}</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem header>{user.email}</DropdownItem>
+                <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
+          )}
         </div>
       </div>
     </nav>

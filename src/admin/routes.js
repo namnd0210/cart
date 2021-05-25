@@ -1,7 +1,7 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 import DashboardPage from "admin/views/Dashboard/Dashboard.js";
-import UserProfile from "admin/views/UserProfile/UserProfile.js";
+import Product from "admin/views/Product/Product.js";
 import TableList from "admin/views/TableList/TableList.js";
 // import LibraryBooks from "@material-ui/icons/LibraryBooks";
 // import BubbleChart from "@material-ui/icons/BubbleChart";
@@ -29,11 +29,11 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user",
-    name: "User Profile",
+    path: "/item/:id",
+    name: "Product",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
-    component: UserProfile,
+    component: Product,
     layout: "/admin",
   },
   {

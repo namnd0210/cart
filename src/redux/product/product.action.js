@@ -12,6 +12,11 @@ export const getAllProductsResult = (result, isSuccess = true) => ({
   result: result,
 });
 
+export const updateProduct = (data) => ({
+  type: types.UPDATE_PRODUCT,
+  data,
+});
+
 export const getProduct = (id) => ({
   type: types.GET_PRODUCT,
   id,

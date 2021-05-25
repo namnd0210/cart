@@ -11,6 +11,10 @@ export const getProductApi = async (id) => {
   return await Axios.get(`${PRODUCT_ENDPOINT}/${id}`);
 };
 
+export const updateProductApi = async ({ data }) => {
+  return await Axios.put(`${PRODUCT_ENDPOINT}/${data.id}`, data);
+};
+
 export const deleteProductApi = async (id) => {
   return await Axios.delete(`${PRODUCT_ENDPOINT}/${id}`);
 };

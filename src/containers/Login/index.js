@@ -3,9 +3,12 @@ import { Link, useHistory } from "react-router-dom";
 import CSSModules from "react-css-modules";
 // import { auth } from "../../firebase";
 import style from "./style.module.scss";
+import { useDispatch } from "react-redux";
+import { login } from "redux/auth/auth.action";
 
 const Login = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const signIn = (event) => {
@@ -19,6 +22,8 @@ const Login = () => {
     //   .catch((err) => {
     //     alert(err.message);
     //   });
+    console.log(email, password);
+    dispatch(login({ username: email, password }));
   };
   const register = (event) => {
     event.preventDefault();

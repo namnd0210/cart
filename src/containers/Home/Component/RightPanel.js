@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CSSModules from "react-css-modules";
 import style from "../styles/right-panel.module.scss";

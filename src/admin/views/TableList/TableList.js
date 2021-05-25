@@ -12,6 +12,7 @@ import Button from "admin/components/CustomButtons/Button.js";
 import Modal from "admin/components/Modal/Modal.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "redux/product/product.action";
+import { Link } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -102,14 +103,17 @@ export default function TableList() {
                   item.authors[0],
                   `$${item.price}`,
                   item.inStock,
-                  <Button
-                    onClick={() => {
-                      setCurrentProduct(products.find((e) => e.id === item.id));
-                      setOpen(true);
-                    }}
-                  >
-                    Detail
-                  </Button>,
+                  <Link to={`/admin/item/${item.id}`}>
+                    <Button
+                      onClick={() => {
+                        setCurrentProduct(
+                          products.find((e) => e.id === item.id)
+                        );
+                      }}
+                    >
+                      Detail
+                    </Button>
+                  </Link>,
                 ])}
               />
             </CardBody>

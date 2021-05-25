@@ -20,11 +20,15 @@ import CustomInput from "admin/components/CustomInput/CustomInput.js";
 import Button from "admin/components/CustomButtons/Button.js";
 
 import styles from "admin/assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import setAuthToken from "helpers/setAuthToken";
+import { useDispatch } from "react-redux";
+import { logOut } from "redux/auth/auth.action";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = (event) => {
@@ -47,6 +51,14 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem("token");
+    dispatch(logOut());
+    window.location.href = "/login";
+  };
+
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -207,7 +219,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout

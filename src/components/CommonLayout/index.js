@@ -3,9 +3,9 @@ import React from "react";
 
 const CommonLayout = ({ children }) => {
   return (
-    <div className="container">
+    <div>
       <Headers />
-      {children}
+      <div className="container">{children}</div>
     </div>
   );
 };
